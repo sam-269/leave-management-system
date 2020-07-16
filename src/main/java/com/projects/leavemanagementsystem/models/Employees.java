@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,12 +43,24 @@ public class Employees implements Serializable {
     public String getEmailid(){
         return emailid;
     }
-    //    public Set<Leaves> getLeaves() {
-//        return leaves;
-//    }
-//
-//    public void setLeaves(Set<Leaves> leaves) {
-//        this.leaves = leaves;
-//    }
 
+    public Integer getEmpId() {
+        return empId;
+    }
+
+    public String getEmpname() {
+        return empname;
+    }
+
+    public Integer getEarnedLeaves() {
+        return earnedLeaves;
+    }
+
+    public Integer getMaternityleaves() {
+        return maternityleaves;
+    }
+
+    public Set<Leaves> getLeaves() {
+        return leaves;
+    }
 }
