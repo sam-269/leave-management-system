@@ -103,13 +103,13 @@ public class LeaveService {
         emailSender.send(message);
     }
 
-    public Integer applyLeaves(Integer id, ApplicationParams applicationParams) {
+    public String applyLeaves(Integer id, ApplicationParams applicationParams) {
         //if earned leaves is greater or equals
         addToAppliedLeaves(id,applicationParams);
         sendMailToManger(id,applicationParams);
 
         //see how to handle proper body template
-        return 1;
+        return "Leave applied successfully";
     }
 
     public void addToAppliedLeaves(Integer id, ApplicationParams applicationParams){

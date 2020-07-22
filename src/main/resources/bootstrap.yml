@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    vault:
+      kv:
+        application-name: lms
+        default-context: ''
+        backend: kv
+        enabled: true
+      authentication: APPROLE
+      app-role:
+        role-id: a4af8edd-4307-5d30-b4c6-7651b8f18f78
+        secret-id: 0f8acd71-cc52-48bb-7c5e-9957a08595b1
+        app-auth-path: approle
+      scheme: https
+      uri: http://127.0.0.1:8200
+      generic:
+        enabled: false

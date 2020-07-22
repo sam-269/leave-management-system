@@ -9,9 +9,10 @@ import com.projects.leavemanagementsystem.models.Employees;
 import com.projects.leavemanagementsystem.models.LeaveApplications;
 import com.projects.leavemanagementsystem.models.Leaves;
 import com.projects.leavemanagementsystem.service.LeaveService;
-import com.sun.istack.NotNull;
+
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/v1")
 public class LeaveController {
+
     @Autowired
     private EmployeesDao ed;
     @Autowired
@@ -29,6 +31,13 @@ public class LeaveController {
     private LeaveService leaveService;
     @Autowired
     public JavaMailSender emailSender;
+    @Value("${name}")
+    private String name;
+
+    @GetMapping()
+    public String hello(){
+        return name;
+    }
 
     @GetMapping("employees/{id}")
     @ApiOperation(value = "Gets employee data by id", notes = "Provide an id to look up employee details from the database")
@@ -40,7 +49,7 @@ public class LeaveController {
     @ApiOperation(value = "Gets all leaves availed by employee within a particular duration",
             notes = "Provide the start and end date within which availed leaves need to be checked and the corresponding id")
     public List<Date> checkAvailedLeaves(@PathVariable("id") Integer id,
-                                         @NotNull @RequestBody DateParams date) {
+                                          @RequestBody DateParams date) {
         return leaveService.checkAvailedLeaves(id, date.getStartDate(), date.getEndDate());
     }
 
@@ -49,8 +58,8 @@ public class LeaveController {
             notes = "Provide id,start date, end date, reason for leave and type of leave. A mail will be sent to the employee's manager for leave application")
     public String applyLeaves(@PathVariable("id") Integer id,
                               @RequestBody ApplicationParams applicationParams) {
-        leaveService.applyLeaves(id, applicationParams);
-        return "Leave applied successfully";
+        return (leaveService.applyLeaves(id, applicationParams));
+
     }
 
     @GetMapping("my_leaves_applied/{eid}")
@@ -72,19 +81,8 @@ public class LeaveController {
         return leaveService.actionForAppliedLeaves(lid, action.getAction());
     }
 
-    @GetMapping("sam")
-    public void temp (){
-        //return leaveService.getAll();
-        Leaves l = new Leaves();
-        l.setEmpId(3);
-        Date d = new Date();
-
-        l.setLeaves(d);
-
-        ld.save(l);
-    }
     @PostMapping("hello")
-    public void hello(){
+    public void helloq(){
         Employees e = new Employees();
         e.setEarnedLeaves(2);
         e.setEmailid("");
@@ -93,7 +91,7 @@ public class LeaveController {
         e.setLeaves(null);
         e.setMaternityleaves(null);
         e.setMid(34);
-        ed.save(e);
+
     }
 
 
